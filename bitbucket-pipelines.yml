@@ -6,17 +6,20 @@ pipelines:
     - step:
         name: Node.js build
         script:
-          # --- build and test the Node app
           - npm install
           # - npm test
     - step:
         name: Docker image build
         image: atlassian/pipelines-awscli:1.16.98
         script:
-          # --- aws login
           - eval $(aws ecr get-login --region ${AWS_DEFAULT_REGION} --no-include-email)
           - export BUILD_ID=$BITBUCKET_BRANCH_$BITBUCKET_COMMIT_$BITBUCKET_BUILD_NUMBER
           - docker build -t ${AWS_REGISTRY_URL}:$BUILD_ID .
           - docker push ${AWS_REGISTRY_URL}:$BUILD_ID
           - docker tag ${AWS_REGISTRY_URL}:$BUILD_ID ${AWS_REGISTRY_URL}:development
           - docker push ${AWS_REGISTRY_URL}:development
+    - step: Deploy
+        name: Deploy to k8s
+        name: atlassian/pipelines-kubectl
+        script:
+          - kubectl version --client
