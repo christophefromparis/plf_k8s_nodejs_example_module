@@ -24,4 +24,15 @@ pipelines:
         deployment: test
         script:
           - kubectl version --client
-
+    - step:
+        name: Deploy to k8s staging
+        image: atlassian/pipelines-kubectl
+        deployment: staging
+        script:
+          - kubectl version --client
+    - step:
+        name: Deploy to k8s production
+        image: atlassian/pipelines-kubectl
+        deployment: production
+        script:
+          - kubectl version --client
