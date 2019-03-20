@@ -4,11 +4,15 @@ options:
 pipelines:
   default:
     - step:
-        image: atlassian/pipelines-awscli:1.16.98
+        name: Node.js build
         script:
           # --- build and test the Node app
           - npm install
           # - npm test
+    - step:
+        name: Docker image build
+        image: atlassian/pipelines-awscli:1.16.98
+        script:
           # --- aws login
           - eval $(aws ecr get-login --region ${AWS_DEFAULT_REGION} --no-include-email)
           - export BUILD_ID=$BITBUCKET_BRANCH_$BITBUCKET_COMMIT_$BITBUCKET_BUILD_NUMBER
