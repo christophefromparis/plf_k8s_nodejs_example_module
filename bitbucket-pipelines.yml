@@ -28,11 +28,13 @@ pipelines:
         name: Deploy to k8s staging
         image: atlassian/pipelines-kubectl
         deployment: staging
+        trigger: manual
         script:
           - kubectl version --client
     - step:
         name: Deploy to k8s production
         image: atlassian/pipelines-kubectl
         deployment: production
+        trigger: manual
         script:
           - kubectl version --client
