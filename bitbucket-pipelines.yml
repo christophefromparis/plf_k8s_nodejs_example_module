@@ -19,7 +19,9 @@ pipelines:
           - docker tag ${AWS_REGISTRY_URL}:$BUILD_ID ${AWS_REGISTRY_URL}:development
           - docker push ${AWS_REGISTRY_URL}:development
     - step:
-        name: Deploy to k8s
+        name: Deploy to k8s test
         image: atlassian/pipelines-kubectl
+        deployment: test
         script:
           - kubectl version --client
+
