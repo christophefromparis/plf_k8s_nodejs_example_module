@@ -1,0 +1,7 @@
+pipelines:
+  default:
+    - step:
+        script:
+          # build and test the Node app
+          - npm install
+          - npm test
