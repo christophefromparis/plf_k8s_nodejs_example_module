@@ -4,6 +4,7 @@
   "description": "A simple Hello World app",
   "main": "app.js",
   "scripts": {
+    "start": "node --version",
     "test": "echo \"No test specified yet\" && exit 1"
   },
   "repository": {
