@@ -4,8 +4,10 @@ options:
 pipelines:
   default:
     - step:
+      caches:
+        - node
         name: Node.js build
-        image: node:10.15.0
+        image: node:11.13.0
         script:
           - node -v
           - npm install
