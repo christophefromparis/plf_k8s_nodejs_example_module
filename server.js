@@ -12,5 +12,5 @@ const server = http.createServer((req, res) => {
 server.listen(port, hostname, () => {
   console.log('Server running at http://${hostname}:${port}/');
   console.log('plf_k8s_nodejs_example'');
-  console.log('I am here');
+  console.log('I am here...');
 });
