@@ -28,8 +28,8 @@ pipelines:
         deployment: test
         script:
           - kubectl version --client
-          - echo $KUBE_TOKEN | base64 -d > kube_token
-          - echo $KUBE_CA | base64 -d > ca.pem
+          - echo $K8S_TOKEN | base64 -d > kube_token
+          - echo $K8S_CA | base64 -d > ca.pem
           - kubectl config set-cluster k8s-dev --server=https://CB0612D96CF05F7F8DE07661F562BAF7.sk1.eu-west-1.eks.amazonaws.com --certificate-authority=ca.pem
           - kubectl config set-credentials bitbucket-pipeline --token="$(cat kube_token)"
           - kubectl config set-context k8s-dev-context --cluster=k8s-dev --user=bitbucket-pipeline
