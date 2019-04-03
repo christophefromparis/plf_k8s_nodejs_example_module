@@ -2,9 +2,9 @@
   "name": "hello_world",
   "version": "1.0.0",
   "description": "A simple Hello World app",
-  "main": "app.js",
+  "main": "server.js",
   "scripts": {
-    "start": "node --version",
+    "start": "node server.js",
     "test": "echo \"No test specified yet\" && exit 1"
   },
   "repository": {
