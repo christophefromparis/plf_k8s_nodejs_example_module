@@ -4,8 +4,8 @@ options:
 pipelines:
   default:
     - step:
-      caches:
-        - node
+        caches:
+          - node
         name: Node.js build
         image: node:11.13.0
         script:
