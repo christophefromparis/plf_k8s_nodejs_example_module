@@ -5,9 +5,11 @@ pipelines:
   default:
     - step:
         name: Node.js build
+        image: node:10.15.0
         script:
+          - node -v
           - npm install
-          # - npm test
+          - npm test
     - step:
         name: Docker image build
         image: atlassian/pipelines-awscli:1.16.98
