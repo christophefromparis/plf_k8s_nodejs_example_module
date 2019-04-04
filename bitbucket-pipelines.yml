@@ -33,6 +33,7 @@ pipelines:
         script:
           - echo $K8S_TOKEN > ./token
           - echo $K8S_CA > ./ca.pem
+          - cat "$(pwd)/ca.pem"
           - kubectl config set-cluster K8S-DEV-CLUSTER --server=$K8S_ENDPOINT --certificate-authority="$(pwd)/ca.pem"
           - kubectl config set-credentials $K8S_SA --token="$(cat ./token)"
           - kubectl config set-context K8S-DEV-CONTEXT --cluster=K8S-DEV-CLUSTER --user=$K8S_SA
