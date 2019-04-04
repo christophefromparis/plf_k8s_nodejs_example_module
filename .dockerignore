@@ -1,3 +1,4 @@
 .gitignore
+.dockerignore
 bitbucket-pipelines.yml
 README.md
