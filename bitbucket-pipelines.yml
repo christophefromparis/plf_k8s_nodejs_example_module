@@ -31,6 +31,9 @@ pipelines:
         image: atlassian/pipelines-kubectl
         deployment: test
         script:
+          - curl -o aws-iam-authenticator https://amazon-eks.s3-us-west-2.amazonaws.com/1.12.7/2019-03-27/bin/linux/amd64/aws-iam-authenticator
+          - chmod +x ./aws-iam-authenticator
+          - aws-iam-authenticator help
           - echo $K8S_TOKEN > ./token
           - echo $K8S_CA > ./ca.pem
           - cat "$(pwd)/ca.pem"
