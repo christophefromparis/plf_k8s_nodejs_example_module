@@ -37,6 +37,7 @@ pipelines:
           - kubectl config set-credentials $K8S_SA --token="$(cat ./token)"
           - kubectl config set-context K8S-DEV-CONTEXT --cluster=K8S-DEV-CLUSTER --user=$K8S_SA
           - kubectl config use-context K8S-DEV-CONTEXT
+          - kubectl config view
           - kubectl set image deployment/nodejs-example nodejs-example=665901990640.dkr.ecr.eu-west-1.amazonaws.com/k8s-node-helloworld:$BITBUCKET_COMMIT -n dev
           - pipe: atlassian/slack-notify:0.2.3
             variables:
