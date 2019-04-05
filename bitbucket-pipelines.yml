@@ -27,7 +27,7 @@ pipelines:
               MESSAGE: 'New version of Nodejs-example image pushed'
     - step:
         name: Deploy to k8s dev
-        image: christophefromparis/pipelines-awscli-kubectl:1.0.2
+        image: christophefromparis/pipelines-awscli-kubectl:1.1.0
         deployment: test
         script:
           - aws eks update-kubeconfig --name PLATEFORME_CLOUD-ACADEMY_EKS_DEV --verbose --alias PLATEFORME_CLOUD-ACADEMY_EKS_DEV
