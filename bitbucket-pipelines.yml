@@ -21,16 +21,16 @@ pipelines:
           - docker push ${AWS_REGISTRY_URL}:$BUILD_ID
           - docker tag ${AWS_REGISTRY_URL}:$BUILD_ID ${AWS_REGISTRY_URL}:development
           - docker push ${AWS_REGISTRY_URL}:development
-          - aws eks update-kubeconfig --name PLATEFORME_CLOUD-ACADEMY_EKS_DEV --verbose --alias PLATEFORME_CLOUD-ACADEMY_EKS_DEV
           - pipe: atlassian/slack-notify:0.2.3
             variables:
               WEBHOOK_URL: 'https://hooks.slack.com/services/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'
               MESSAGE: 'New version of Nodejs-example image pushed'
     - step:
         name: Deploy to k8s dev
-        image: atlassian/pipelines-kubectl
+        image: christophefromparis/pipelines-awscli-kubectl:1.0.0
         deployment: test
         script:
+          - aws eks update-kubeconfig --name PLATEFORME_CLOUD-ACADEMY_EKS_DEV --verbose --alias PLATEFORME_CLOUD-ACADEMY_EKS_DEV
           - kubectl config use-context PLATEFORME_CLOUD-ACADEMY_EKS_DEV
           - kubectl config view
           - kubectl set image deployment/nodejs-example nodejs-example=665901990640.dkr.ecr.eu-west-1.amazonaws.com/k8s-node-helloworld:$BITBUCKET_COMMIT
