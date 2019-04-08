@@ -26,7 +26,7 @@ pipelines:
           - pipe: atlassian/slack-notify:0.2.3
             variables:
               WEBHOOK_URL: 'https://hooks.slack.com/services/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'
-              MESSAGE: 'New version of Nodejs-example image pushed'
+              MESSAGE: 'New version (#$BUILD_ID) of Nodejs-example image pushed'
     - step:
         name: Deploy to k8s dev
         image: christophefromparis/pipelines-awscli-kubectl:1.2.0
@@ -41,7 +41,7 @@ pipelines:
           - pipe: atlassian/slack-notify:0.2.3
             variables:
               WEBHOOK_URL: 'https://hooks.slack.com/services/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'
-              MESSAGE: 'New version of Nodejs-example deployed on k8s development'
+              MESSAGE: 'New version (#$BUILD_ID) of Nodejs-example deployed on k8s development'
     - step:
         name: Deploy to k8s staging
         image: christophefromparis/pipelines-awscli-kubectl:1.2.0
@@ -57,7 +57,7 @@ pipelines:
           - pipe: atlassian/slack-notify:0.2.3
             variables:
               WEBHOOK_URL: 'https://hooks.slack.com/services/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'
-              MESSAGE: 'New version of Nodejs-example deployed on k8s staging'
+              MESSAGE: 'New version (#$BUILD_ID) of Nodejs-example deployed on k8s staging'
     - step:
         name: Deploy to k8s production
         image: christophefromparis/pipelines-awscli-kubectl:1.2.0
@@ -73,4 +73,4 @@ pipelines:
           - pipe: atlassian/slack-notify:0.2.3
             variables:
               WEBHOOK_URL: 'https://hooks.slack.com/services/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'
-              MESSAGE: 'New version of Nodejs-example deployed on k8s production'
+              MESSAGE: 'New version (#$BUILD_ID) of Nodejs-example deployed on k8s production'
