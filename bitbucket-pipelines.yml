@@ -40,7 +40,7 @@ pipelines:
               MESSAGE: 'New version of Nodejs-example deployed on k8s development'
     - step:
         name: Deploy to k8s staging
-        image: atlassian/pipelines-kubectl
+        image: christophefromparis/pipelines-awscli-kubectl:1.2.0
         deployment: staging
         trigger: manual
         script:
@@ -54,7 +54,7 @@ pipelines:
               MESSAGE: 'New version of Nodejs-example deployed on k8s staging'
     - step:
         name: Deploy to k8s production
-        image: atlassian/pipelines-kubectl
+        image: christophefromparis/pipelines-awscli-kubectl:1.2.0
         deployment: production
         trigger: manual
         script:
