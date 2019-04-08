@@ -33,7 +33,7 @@ pipelines:
           - aws eks update-kubeconfig --name PLATEFORME_CLOUD-ACADEMY_EKS_DEV --verbose --alias PLATEFORME_CLOUD-ACADEMY_EKS_DEV
           - kubectl config set-context PLATEFORME_CLOUD-ACADEMY_EKS_DEV --namespace=dev
           - kubectl config use-context PLATEFORME_CLOUD-ACADEMY_EKS_DEV
-          - kubectl set image deployment/nodejs-example nodejs-example=665901990640.dkr.ecr.eu-west-1.amazonaws.com/k8s-node-helloworld:$BITBUCKET_COMMIT
+          - kubectl set image deployment/nodejs-example nodejs-example=665901990640.dkr.ecr.eu-west-1.amazonaws.com/k8s-node-helloworld:$BUILD_ID
           - pipe: atlassian/slack-notify:0.2.3
             variables:
               WEBHOOK_URL: 'https://hooks.slack.com/services/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'
@@ -47,7 +47,7 @@ pipelines:
           - aws eks update-kubeconfig --name PLATEFORME_CLOUD-ACADEMY_EKS_DEV --verbose --alias PLATEFORME_CLOUD-ACADEMY_EKS_DEV
           - kubectl config set-context PLATEFORME_CLOUD-ACADEMY_EKS_DEV --namespace=staging
           - kubectl config use-context PLATEFORME_CLOUD-ACADEMY_EKS_DEV
-          - kubectl set image deployment/nodejs-example nodejs-example=665901990640.dkr.ecr.eu-west-1.amazonaws.com/k8s-node-helloworld:$BITBUCKET_COMMIT
+          - kubectl set image deployment/nodejs-example nodejs-example=665901990640.dkr.ecr.eu-west-1.amazonaws.com/k8s-node-helloworld:$BUILD_ID
           - pipe: atlassian/slack-notify:0.2.3
             variables:
               WEBHOOK_URL: 'https://hooks.slack.com/services/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'
@@ -61,7 +61,7 @@ pipelines:
           - aws eks update-kubeconfig --name PLATEFORME_CLOUD-ACADEMY_EKS_DEV --verbose --alias PLATEFORME_CLOUD-ACADEMY_EKS_DEV
           - kubectl config set-context PLATEFORME_CLOUD-ACADEMY_EKS_DEV --namespace=production
           - kubectl config use-context PLATEFORME_CLOUD-ACADEMY_EKS_DEV
-          - kubectl set image deployment/nodejs-example nodejs-example=665901990640.dkr.ecr.eu-west-1.amazonaws.com/k8s-node-helloworld:$BITBUCKET_COMMIT
+          - kubectl set image deployment/nodejs-example nodejs-example=665901990640.dkr.ecr.eu-west-1.amazonaws.com/k8s-node-helloworld:$BUILD_ID
           - pipe: atlassian/slack-notify:0.2.3
             variables:
               WEBHOOK_URL: 'https://hooks.slack.com/services/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'
