@@ -1,15 +1,25 @@
-const http = require('http');
-
-const hostname = '0.0.0.0';
-const port = 8080;
-
-const server = http.createServer((req, res) => {
-  res.statusCode = 200;
-  res.setHeader('Content-Type', 'text/plain');
-  res.end('Hello Veolia World\n');
+const prometheus = require('prom-client');
+const collectDefaultMetrics = prometheus.collectDefaultMetrics;
+const counter = new prometheus.Counter({
+  name: 'counter',
+  help: 'A sample counter'
 });
 
-server.listen(port, hostname, () => {
-  console.log(`Server running at http:\/\/${hostname}:${port}\/`);
-  console.log('I am here...');
-});
+const port = 9102;
+
+collectDefaultMetrics({ timeout: 5000 });
+collectDefaultMetrics({ prefix: 'nodejs-example' });
+
+var express = require('express')
+var app = express()
+
+app.get('/', function (req, res) {
+  counter.inc();
+  res.send('Hello Veolia World')
+})
+
+app.get('/metrics', function (req, res) {
+  res.send(prometheus.register.metrics())
+})
+
+app.listen(port)

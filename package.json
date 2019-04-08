@@ -7,6 +7,10 @@
     "start": "node server.js",
     "test": "echo \"No test specified yet\" && exit 0"
   },
+  "dependencies": {
+    "express": "4.16.4",
+    "prom-client": "11.3.0"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://christophecosnefroyveolia@bitbucket.org/ist-efr/plf_k8s_nodejs_example.git"
