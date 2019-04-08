@@ -30,12 +30,9 @@ pipelines:
         image: christophefromparis/pipelines-awscli-kubectl:1.2.0
         deployment: test
         script:
-          #- eval $(aws ecr get-login --region ${AWS_DEFAULT_REGION} --no-include-email)
-          - aws sts get-caller-identity
           - aws eks update-kubeconfig --name PLATEFORME_CLOUD-ACADEMY_EKS_DEV --verbose --alias PLATEFORME_CLOUD-ACADEMY_EKS_DEV
           - kubectl config set-context PLATEFORME_CLOUD-ACADEMY_EKS_DEV --namespace=dev
           - kubectl config use-context PLATEFORME_CLOUD-ACADEMY_EKS_DEV
-          - kubectl config view
           - kubectl set image deployment/nodejs-example nodejs-example=665901990640.dkr.ecr.eu-west-1.amazonaws.com/k8s-node-helloworld:$BITBUCKET_COMMIT
           - pipe: atlassian/slack-notify:0.2.3
             variables:
@@ -47,11 +44,25 @@ pipelines:
         deployment: staging
         trigger: manual
         script:
-          - kubectl version --client
+          - aws eks update-kubeconfig --name PLATEFORME_CLOUD-ACADEMY_EKS_DEV --verbose --alias PLATEFORME_CLOUD-ACADEMY_EKS_DEV
+          - kubectl config set-context PLATEFORME_CLOUD-ACADEMY_EKS_DEV --namespace=staging
+          - kubectl config use-context PLATEFORME_CLOUD-ACADEMY_EKS_DEV
+          - kubectl set image deployment/nodejs-example nodejs-example=665901990640.dkr.ecr.eu-west-1.amazonaws.com/k8s-node-helloworld:$BITBUCKET_COMMIT
+          - pipe: atlassian/slack-notify:0.2.3
+            variables:
+              WEBHOOK_URL: 'https://hooks.slack.com/services/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'
+              MESSAGE: 'New version of Nodejs-example deployed on k8s staging'
     - step:
         name: Deploy to k8s production
         image: atlassian/pipelines-kubectl
         deployment: production
         trigger: manual
         script:
-          - kubectl version --client
+          - aws eks update-kubeconfig --name PLATEFORME_CLOUD-ACADEMY_EKS_DEV --verbose --alias PLATEFORME_CLOUD-ACADEMY_EKS_DEV
+          - kubectl config set-context PLATEFORME_CLOUD-ACADEMY_EKS_DEV --namespace=production
+          - kubectl config use-context PLATEFORME_CLOUD-ACADEMY_EKS_DEV
+          - kubectl set image deployment/nodejs-example nodejs-example=665901990640.dkr.ecr.eu-west-1.amazonaws.com/k8s-node-helloworld:$BITBUCKET_COMMIT
+          - pipe: atlassian/slack-notify:0.2.3
+            variables:
+              WEBHOOK_URL: 'https://hooks.slack.com/services/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'
+              MESSAGE: 'New version of Nodejs-example deployed on k8s production'
