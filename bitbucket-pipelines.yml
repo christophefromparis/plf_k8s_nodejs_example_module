@@ -12,7 +12,7 @@ pipelines:
           - npm install
           - npm test
     - step:
-        name: Docker image build
+        name: Build & push the Docker image
         image: atlassian/pipelines-awscli:1.16.98
         script:
           - eval $(aws ecr get-login --region ${AWS_DEFAULT_REGION} --no-include-email)
@@ -30,7 +30,8 @@ pipelines:
         image: christophefromparis/pipelines-awscli-kubectl:1.2.0
         deployment: test
         script:
-          - eval $(aws ecr get-login --region ${AWS_DEFAULT_REGION} --no-include-email)
+          #- eval $(aws ecr get-login --region ${AWS_DEFAULT_REGION} --no-include-email)
+          - aws sts get-caller-identity
           - aws eks update-kubeconfig --name PLATEFORME_CLOUD-ACADEMY_EKS_DEV --verbose --alias PLATEFORME_CLOUD-ACADEMY_EKS_DEV
           - kubectl config set-context PLATEFORME_CLOUD-ACADEMY_EKS_DEV --namespace=dev
           - kubectl config use-context PLATEFORME_CLOUD-ACADEMY_EKS_DEV
