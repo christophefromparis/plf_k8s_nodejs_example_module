@@ -14,4 +14,4 @@ server.get('/metrics', (req, res) => {
   res.end(Prometheus.register.metrics())
 })
 
-server.listen(3000)
+server.listen(9102)
