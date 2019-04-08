@@ -8,7 +8,7 @@ const counter = new prometheus.Counter({
 const port = 9102;
 
 collectDefaultMetrics({ timeout: 5000 });
-collectDefaultMetrics({ prefix: 'nodejs-example' });
+//collectDefaultMetrics({ prefix: 'nodejs-example' });
 
 var express = require('express')
 var app = express()
