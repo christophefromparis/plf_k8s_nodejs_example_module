@@ -1,7 +1,7 @@
 const prometheus = require('prom-client');
 const collectDefaultMetrics = prometheus.collectDefaultMetrics;
 const counter = new prometheus.Counter({
-  name: 'counter',
+  name: 'tot_request_example',
   help: 'A sample counter'
 });
 
