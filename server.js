@@ -10,10 +10,11 @@ const port = 9102;
 collectDefaultMetrics({ timeout: 5000 });
 
 var express = require('express')
-var app = express()
-
 var session = require('express-session');
 var Keycloak = require('keycloak-connect');
+
+var app = express()
+
 var memoryStore = new session.MemoryStore();
 var keycloak = new Keycloak({ store: memoryStore });
 
@@ -28,6 +29,8 @@ app.get('/metrics', function (req, res) {
   res.send(prometheus.register.metrics())
 })
 
-app.get( '/protect', keycloak.protect(), complaintHandler );
+app.get( '/protected', keycloak.protect(), (req, res) => {
+  res.send('Welcome to the protected content!')
+})
 
 app.listen(port)
