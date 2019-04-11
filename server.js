@@ -18,11 +18,18 @@ var app = express()
 var memoryStore = new session.MemoryStore();
 var keycloak = new Keycloak({ store: memoryStore });
 
+app.use(session({
+  secret: 'mySecret',
+  resave: false,
+  saveUninitialized: true,
+  store: memoryStore
+}));
+
 app.use( keycloak.middleware() );
 
 app.get('/', function (req, res) {
   counter.inc();
-  res.send('Hello Veolia World')
+  res.send('Hello the world')
 })
 
 app.get('/metrics', function (req, res) {
