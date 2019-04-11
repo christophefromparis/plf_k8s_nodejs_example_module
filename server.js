@@ -8,10 +8,16 @@ const counter = new prometheus.Counter({
 const port = 9102;
 
 collectDefaultMetrics({ timeout: 5000 });
-//collectDefaultMetrics({ prefix: 'nodejs-example' });
 
 var express = require('express')
 var app = express()
+
+var session = require('express-session');
+var Keycloak = require('keycloak-connect');
+var memoryStore = new session.MemoryStore();
+var keycloak = new Keycloak({ store: memoryStore });
+
+app.use( keycloak.middleware() );
 
 app.get('/', function (req, res) {
   counter.inc();
@@ -21,5 +27,7 @@ app.get('/', function (req, res) {
 app.get('/metrics', function (req, res) {
   res.send(prometheus.register.metrics())
 })
+
+app.get( '/protect', keycloak.protect(), complaintHandler );
 
 app.listen(port)
