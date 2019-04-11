@@ -19,7 +19,7 @@ var memoryStore = new session.MemoryStore();
 var keycloak = new Keycloak({ store: memoryStore });
 
 app.use(session({
-  secret: 'mySecret',
+  secret: 'myAwesomeAndVeryLongSecret',
   resave: false,
   saveUninitialized: true,
   store: memoryStore
@@ -39,5 +39,7 @@ app.get('/metrics', function (req, res) {
 app.get( '/protected', keycloak.protect(), (req, res) => {
   res.send('Welcome to the protected content!')
 })
+
+app.use( keycloak.middleware( { logout: '/'} ))
 
 app.listen(port)
