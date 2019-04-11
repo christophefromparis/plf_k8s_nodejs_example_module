@@ -32,7 +32,6 @@ pipelines:
         image: christophefromparis/pipelines-awscli-kubectl:1.2.0
         max-time: 5
         deployment: test
-        trigger: manual
         script:
           - aws eks update-kubeconfig --name PLATEFORME_CLOUD-ACADEMY_EKS_DEV --verbose --alias PLATEFORME_CLOUD-ACADEMY_EKS_DEV
           - kubectl config set-context PLATEFORME_CLOUD-ACADEMY_EKS_DEV --namespace=dev
