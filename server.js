@@ -25,7 +25,7 @@ app.use(session({
   store: memoryStore
 }));
 
-app.use( keycloak.middleware( { logout: '/'} ));
+app.use( keycloak.middleware( { logout: '/logout'} ));
 
 app.get('/', function (req, res) {
   counter.inc();
