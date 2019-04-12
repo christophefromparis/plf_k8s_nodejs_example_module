@@ -3,8 +3,6 @@
   "auth-server-url": "https://keycloak.kube.infra.istefr.fr/auth",
   "ssl-required": "external",
   "resource": "nodejs",
-  "credentials": {
-    "secret": "5839732d-7ade-4368-a4cc-fcf1f31a4e65"
-  },
+  "public-client": true,
   "confidential-port": 0
 }
