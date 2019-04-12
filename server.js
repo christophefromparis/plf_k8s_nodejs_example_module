@@ -30,7 +30,7 @@ app.use( keycloak.middleware( { logout: '/logout'} ));
 app.get('/', function (req, res) {
   counter.inc();
   console.log('Counter incremented');
-  res.send('Hello the world')
+  res.send('Hello the world<br><br><a href="/protected">Here is protected</a>')
 });
 
 app.get('/metrics', function (req, res) {
