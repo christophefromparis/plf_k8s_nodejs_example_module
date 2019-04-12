@@ -29,15 +29,18 @@ app.use( keycloak.middleware( { logout: '/logout'} ));
 
 app.get('/', function (req, res) {
   counter.inc();
+  console.log('Counter incremented');
   res.send('Hello the world')
 });
 
 app.get('/metrics', function (req, res) {
   res.send(prometheus.register.metrics())
+  console.log('Someone wants metrics');
 });
 
 app.get( '/protected', keycloak.protect(), (req, res) => {
   res.send('Welcome to the protected content!')
+  console.log('Protected content accessed');
 });
 
 app.listen(port);
