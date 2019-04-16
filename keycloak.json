@@ -1,6 +1,6 @@
 {
   "realm": "k8s",
-  "auth-server-url": "https://keycloak.kube.infra.istefr.fr/auth",
+  "auth-server-url": "https://keycloak.k.infra.istefr.fr/auth",
   "ssl-required": "external",
   "resource": "nodejs",
   "public-client": true,
