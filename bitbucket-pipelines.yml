@@ -14,7 +14,7 @@ pipelines:
           - npm test
     - step:
         name: Build & push the Docker image
-        image: atlassian/pipelines-awscli:1.16.98
+        image: christophefromparis/pipelines:1.5.0
         max-time: 5
         script:
           - eval $(aws ecr get-login --region ${AWS_DEFAULT_REGION} --no-include-email)
@@ -29,7 +29,7 @@ pipelines:
               MESSAGE: 'New version (#$BUILD_ID) of Nodejs-example image pushed'
     - step:
         name: Deploy to k8s dev
-        image: christophefromparis/pipelines-awscli-kubectl:1.2.0
+        image: christophefromparis/pipelines:1.5.0
         max-time: 5
         deployment: test
         script:
@@ -44,7 +44,7 @@ pipelines:
               MESSAGE: 'New version (#$BUILD_ID) of Nodejs-example deployed on k8s development'
     - step:
         name: Deploy to k8s staging
-        image: christophefromparis/pipelines-awscli-kubectl:1.2.0
+        image: christophefromparis/pipelines:1.5.0
         max-time: 5
         deployment: staging
         trigger: manual
@@ -60,7 +60,7 @@ pipelines:
               MESSAGE: 'New version (#$BUILD_ID) of Nodejs-example deployed on k8s staging'
     - step:
         name: Deploy to k8s production
-        image: christophefromparis/pipelines-awscli-kubectl:1.2.0
+        image: christophefromparis/pipelines:1.5.0
         max-time: 5
         deployment: production
         trigger: manual
