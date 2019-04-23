@@ -47,7 +47,7 @@ pipelines:
               WEBHOOK_URL: 'https://hooks.slack.com/services/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'
               MESSAGE: 'New version (#$BUILD_ID) of Nodejs-example image pushed on GCP'
     - step:
-        name: Deploy to k8s dev
+        name: Deploy to AKS k8s dev
         image: christophefromparis/pipelines:1.5.0
         max-time: 5
         deployment: test
@@ -62,7 +62,7 @@ pipelines:
               WEBHOOK_URL: 'https://hooks.slack.com/services/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'
               MESSAGE: 'New version (#$BUILD_ID) of Nodejs-example deployed on k8s development'
     - step:
-        name: Deploy to k8s staging
+        name: Deploy to AKS k8s staging
         image: christophefromparis/pipelines:1.5.0
         max-time: 5
         deployment: staging
@@ -78,7 +78,7 @@ pipelines:
               WEBHOOK_URL: 'https://hooks.slack.com/services/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'
               MESSAGE: 'New version (#$BUILD_ID) of Nodejs-example deployed on k8s staging'
     - step:
-        name: Deploy to k8s production
+        name: Deploy to AKS k8s production
         image: christophefromparis/pipelines:1.5.0
         max-time: 5
         deployment: production
