@@ -13,7 +13,7 @@ pipelines:
           - npm install
           - npm test
     - step:
-        name: Build & push the Docker image
+        name: Build & push the Docker image to AWS registry
         image: christophefromparis/pipelines:1.5.0
         max-time: 5
         script:
@@ -26,7 +26,26 @@ pipelines:
           - pipe: atlassian/slack-notify:0.2.3
             variables:
               WEBHOOK_URL: 'https://hooks.slack.com/services/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'
-              MESSAGE: 'New version (#$BUILD_ID) of Nodejs-example image pushed'
+              MESSAGE: 'New version (#$BUILD_ID) of Nodejs-example image pushed on AWS'
+    - step:
+        name: Build & push the Docker image to GCP registry
+        image: christophefromparis/pipelines:1.5.0
+        max-time: 5
+        script:
+          - mkdir $BITBUCKET_CLONE_DIR/secrets
+          - echo $GCP_CREDENTIALS > $BITBUCKET_CLONE_DIR/secrets/gcp-credentials.json
+          - gcloud auth activate-service-account --key-file=$BITBUCKET_CLONE_DIR/secrets/gcp-credentials.json
+          - gcloud config set project fr-ist-isteau-monica-demo
+          - gcloud auth configure-docker --quiet
+          - export BUILD_ID=$BITBUCKET_BRANCH_$BITBUCKET_COMMIT_$BITBUCKET_BUILD_NUMBER
+          - docker build -t ${GCP_REGISTRY_URL}:$BUILD_ID .
+          - docker push ${GCP_REGISTRY_URL}:$BUILD_ID
+          - docker tag ${GCP_REGISTRY_URL}:$BUILD_ID ${GCP_REGISTRY_URL}:development
+          - docker push ${GCP_REGISTRY_URL}:development
+          - pipe: atlassian/slack-notify:0.2.3
+            variables:
+              WEBHOOK_URL: 'https://hooks.slack.com/services/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'
+              MESSAGE: 'New version (#$BUILD_ID) of Nodejs-example image pushed on GCP'
     - step:
         name: Deploy to k8s dev
         image: christophefromparis/pipelines:1.5.0
