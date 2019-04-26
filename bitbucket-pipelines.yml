@@ -46,50 +46,52 @@ pipelines:
             variables:
               WEBHOOK_URL: 'https://hooks.slack.com/services/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'
               MESSAGE: 'New version (#$BUILD_ID) of Nodejs-example image pushed on GCP'
-    - step:
-        name: Deploy to AKS k8s dev
-        image: christophefromparis/pipelines:1.5.0
-        max-time: 5
-        deployment: test
-        script:
-          - aws eks update-kubeconfig --name PLATEFORME_CLOUD-ACADEMY_EKS_DEV --verbose --alias PLATEFORME_CLOUD-ACADEMY_EKS_DEV
-          - kubectl config set-context PLATEFORME_CLOUD-ACADEMY_EKS_DEV --namespace=dev
-          - kubectl config use-context PLATEFORME_CLOUD-ACADEMY_EKS_DEV
-          - export BUILD_ID=$BITBUCKET_BRANCH_$BITBUCKET_COMMIT_$BITBUCKET_BUILD_NUMBER
-          - kubectl set image deployment/nodejs-example nodejs-example=665901990640.dkr.ecr.eu-west-1.amazonaws.com/k8s-node-helloworld:$BUILD_ID
-          - pipe: atlassian/slack-notify:0.2.3
-            variables:
-              WEBHOOK_URL: 'https://hooks.slack.com/services/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'
-              MESSAGE: 'New version (#$BUILD_ID) of Nodejs-example deployed on k8s development'
-    - step:
-        name: Deploy to AKS k8s staging
-        image: christophefromparis/pipelines:1.5.0
-        max-time: 5
-        deployment: staging
-        trigger: manual
-        script:
-          - aws eks update-kubeconfig --name PLATEFORME_CLOUD-ACADEMY_EKS_DEV --verbose --alias PLATEFORME_CLOUD-ACADEMY_EKS_DEV
-          - kubectl config set-context PLATEFORME_CLOUD-ACADEMY_EKS_DEV --namespace=staging
-          - kubectl config use-context PLATEFORME_CLOUD-ACADEMY_EKS_DEV
-          - export BUILD_ID=$BITBUCKET_BRANCH_$BITBUCKET_COMMIT_$BITBUCKET_BUILD_NUMBER
-          - kubectl set image deployment/nodejs-example nodejs-example=665901990640.dkr.ecr.eu-west-1.amazonaws.com/k8s-node-helloworld:$BUILD_ID
-          - pipe: atlassian/slack-notify:0.2.3
-            variables:
-              WEBHOOK_URL: 'https://hooks.slack.com/services/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'
-              MESSAGE: 'New version (#$BUILD_ID) of Nodejs-example deployed on k8s staging'
-    - step:
-        name: Deploy to AKS k8s production
-        image: christophefromparis/pipelines:1.5.0
-        max-time: 5
-        deployment: production
-        trigger: manual
-        script:
-          - aws eks update-kubeconfig --name PLATEFORME_CLOUD-ACADEMY_EKS_DEV --verbose --alias PLATEFORME_CLOUD-ACADEMY_EKS_DEV
-          - kubectl config set-context PLATEFORME_CLOUD-ACADEMY_EKS_DEV --namespace=production
-          - kubectl config use-context PLATEFORME_CLOUD-ACADEMY_EKS_DEV
-          - export BUILD_ID=$BITBUCKET_BRANCH_$BITBUCKET_COMMIT_$BITBUCKET_BUILD_NUMBER
-          - kubectl set image deployment/nodejs-example nodejs-example=665901990640.dkr.ecr.eu-west-1.amazonaws.com/k8s-node-helloworld:$BUILD_ID
-          - pipe: atlassian/slack-notify:0.2.3
-            variables:
-              WEBHOOK_URL: 'https://hooks.slack.com/services/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'
-              MESSAGE: 'New version (#$BUILD_ID) of Nodejs-example deployed on k8s production'
+  custom:
+    aws:
+      - step:
+          name: Deploy to AKS k8s dev
+          image: christophefromparis/pipelines:1.5.0
+          max-time: 5
+          deployment: test
+          script:
+            - aws eks update-kubeconfig --name PLATEFORME_CLOUD-ACADEMY_EKS_DEV --verbose --alias PLATEFORME_CLOUD-ACADEMY_EKS_DEV
+            - kubectl config set-context PLATEFORME_CLOUD-ACADEMY_EKS_DEV --namespace=dev
+            - kubectl config use-context PLATEFORME_CLOUD-ACADEMY_EKS_DEV
+            - export BUILD_ID=$BITBUCKET_BRANCH_$BITBUCKET_COMMIT_$BITBUCKET_BUILD_NUMBER
+            - kubectl set image deployment/nodejs-example nodejs-example=665901990640.dkr.ecr.eu-west-1.amazonaws.com/k8s-node-helloworld:$BUILD_ID
+            - pipe: atlassian/slack-notify:0.2.3
+              variables:
+                WEBHOOK_URL: 'https://hooks.slack.com/services/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'
+                MESSAGE: 'New version (#$BUILD_ID) of Nodejs-example deployed on k8s development'
+      - step:
+          name: Deploy to AKS k8s staging
+          image: christophefromparis/pipelines:1.5.0
+          max-time: 5
+          deployment: staging
+          trigger: manual
+          script:
+            - aws eks update-kubeconfig --name PLATEFORME_CLOUD-ACADEMY_EKS_DEV --verbose --alias PLATEFORME_CLOUD-ACADEMY_EKS_DEV
+            - kubectl config set-context PLATEFORME_CLOUD-ACADEMY_EKS_DEV --namespace=staging
+            - kubectl config use-context PLATEFORME_CLOUD-ACADEMY_EKS_DEV
+            - export BUILD_ID=$BITBUCKET_BRANCH_$BITBUCKET_COMMIT_$BITBUCKET_BUILD_NUMBER
+            - kubectl set image deployment/nodejs-example nodejs-example=665901990640.dkr.ecr.eu-west-1.amazonaws.com/k8s-node-helloworld:$BUILD_ID
+            - pipe: atlassian/slack-notify:0.2.3
+              variables:
+                WEBHOOK_URL: 'https://hooks.slack.com/services/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'
+                MESSAGE: 'New version (#$BUILD_ID) of Nodejs-example deployed on k8s staging'
+      - step:
+          name: Deploy to AKS k8s production
+          image: christophefromparis/pipelines:1.5.0
+          max-time: 5
+          deployment: production
+          trigger: manual
+          script:
+            - aws eks update-kubeconfig --name PLATEFORME_CLOUD-ACADEMY_EKS_DEV --verbose --alias PLATEFORME_CLOUD-ACADEMY_EKS_DEV
+            - kubectl config set-context PLATEFORME_CLOUD-ACADEMY_EKS_DEV --namespace=production
+            - kubectl config use-context PLATEFORME_CLOUD-ACADEMY_EKS_DEV
+            - export BUILD_ID=$BITBUCKET_BRANCH_$BITBUCKET_COMMIT_$BITBUCKET_BUILD_NUMBER
+            - kubectl set image deployment/nodejs-example nodejs-example=665901990640.dkr.ecr.eu-west-1.amazonaws.com/k8s-node-helloworld:$BUILD_ID
+            - pipe: atlassian/slack-notify:0.2.3
+              variables:
+                WEBHOOK_URL: 'https://hooks.slack.com/services/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'
+                MESSAGE: 'New version (#$BUILD_ID) of Nodejs-example deployed on k8s production'
